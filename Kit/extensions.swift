@@ -154,7 +154,7 @@ public extension Double {
     
     func batteryColor(color: Bool = false, lowPowerMode: Bool? = nil) -> NSColor {
         if let mode = lowPowerMode, mode {
-            return NSColor.systemOrange
+            return NSColor.systemYellow
         }
         
         switch self {
