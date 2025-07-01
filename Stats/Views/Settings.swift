@@ -61,7 +61,7 @@ class SettingsWindow: NSWindow, NSWindowDelegate, NSToolbarDelegate {
         sidebarViewController.addSplitViewItem(sidebarItem)
         sidebarViewController.addSplitViewItem(contentItem)
         
-        let newToolbar = NSToolbar(identifier: "eu.exelban.Stats.Settings.Toolbar")
+        let newToolbar = NSToolbar(identifier: "dubielel.Stats.Settings.Toolbar")
         newToolbar.allowsUserCustomization = false
         newToolbar.autosavesConfiguration = true
         newToolbar.displayMode = .default

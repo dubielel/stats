@@ -407,7 +407,7 @@ struct io {
 }
 
 public class ProcessReader: Reader<[Disk_process]> {
-    private let queue = DispatchQueue(label: "eu.exelban.Disk.processReader")
+    private let queue = DispatchQueue(label: "dubielel.Disk.processReader")
     
     private var _list: [Int32: io] = [:]
     private var list: [Int32: io] {
