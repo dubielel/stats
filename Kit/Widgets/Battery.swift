@@ -25,6 +25,7 @@ public class BatteryWidget: WidgetWrapper {
     private var _charging: Bool = false
     private var _ACStatus: Bool = false
     private var _optimizedCharging: Bool = false
+    private var _lowPowerMode: Bool = false
     
     public init(title: String, preview: Bool = false) {
         let widgetTitle: String = title
@@ -70,12 +71,14 @@ public class BatteryWidget: WidgetWrapper {
         var charging: Bool = false
         var ACStatus: Bool = false
         var optimizedCharging: Bool = false
+        var lowPowerMode: Bool = false
         self.queue.sync {
             percentage = self._percentage
             time = self._time
             charging = self._charging
             ACStatus = self._ACStatus
             optimizedCharging = self._optimizedCharging
+            lowPowerMode = self._lowPowerMode
         }
         
         var width: CGFloat = 0
@@ -186,7 +189,7 @@ public class BatteryWidget: WidgetWrapper {
             let innerOffset: CGFloat = -offset + borderWidth + 1
             let innerRadius: CGFloat = self.xlSizeState ? 2 : 1
             var colorState = self.colorState
-            let color = percentage.batteryColor(color: colorState)
+            let color = percentage.batteryColor(color: colorState, lowPowerMode: lowPowerMode)
             let innerPercentage = self.additional == "innerPercentage" && (!ACStatus || !self.chargerIconInside)
             
             if innerPercentage {
@@ -377,7 +380,7 @@ public class BatteryWidget: WidgetWrapper {
         ctx.restoreGState()
     }
     
-    public func setValue(percentage: Double? = nil, ACStatus: Bool? = nil, isCharging: Bool? = nil, optimizedCharging: Bool? = nil, time: Int? = nil) {
+    public func setValue(percentage: Double? = nil, ACStatus: Bool? = nil, isCharging: Bool? = nil, optimizedCharging: Bool? = nil, lowPowerMode: Bool? = nil, time: Int? = nil) {
         var updated: Bool = false
         let timeFormat: String = Store.shared.string(key: "\(self.title)_timeFormat", defaultValue: self.timeFormat)
         
@@ -403,6 +406,10 @@ public class BatteryWidget: WidgetWrapper {
         }
         if let state = optimizedCharging, self._optimizedCharging != state {
             self._optimizedCharging = state
+            updated = true
+        }
+        if let lowPower = lowPowerMode, self._lowPowerMode != lowPower {
+            self._lowPowerMode = lowPower
             updated = true
         }
         
