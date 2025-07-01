@@ -20,6 +20,7 @@ struct Battery_Usage: Codable {
     var isCharging: Bool = false
     var isBatteryPowered: Bool = false
     var optimizedChargingEngaged: Bool = false
+    var lowPowerModeEnabled: Bool = false
     var level: Double = 0
     var cycles: Int = 0
     var health: Int = 0
@@ -125,6 +126,7 @@ public class Battery: Module {
                     ACStatus: !value.isBatteryPowered,
                     isCharging: value.isCharging,
                     optimizedCharging: value.optimizedChargingEngaged,
+                    lowPowerMode: value.lowPowerModeEnabled,
                     time: value.timeToEmpty == 0 && value.timeToCharge != 0 ? value.timeToCharge : value.timeToEmpty
                 )
             case let widget as BatteryDetailsWidget:
