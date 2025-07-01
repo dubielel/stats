@@ -223,7 +223,7 @@ internal class Popup: PopupWrapper {
     
     public func usageCallback(_ value: Battery_Usage) {
         DispatchQueue.main.async(execute: {
-            self.dashboardBatteryView?.setValue(abs(value.level))
+            self.dashboardBatteryView?.setValue(abs(value.level), lowPowerMode: value.lowPowerModeEnabled)
             
             self.levelField?.stringValue = "\(Int(abs(value.level) * 100))%"
             self.levelField?.toolTip = "\(value.currentCapacity) mAh"
@@ -368,6 +368,7 @@ internal class Popup: PopupWrapper {
 
 internal class BatteryView: NSView {
     private var percentage: Double = 0
+    private var lowPowerMode: Bool = false
     
     private var colorState: Bool {
         return Store.shared.bool(key: "Battery_color", defaultValue: false)
@@ -418,19 +419,20 @@ internal class BatteryView: NSView {
             width: (w-10) * CGFloat(self.percentage),
             height: h-4
         ), xRadius: 3, yRadius: 3)
-        self.percentage.batteryColor(color: self.colorState).set()
+        self.percentage.batteryColor(color: self.colorState, lowPowerMode: self.lowPowerMode).set()
         inner.lineWidth = 0
         inner.stroke()
         inner.close()
         inner.fill()
     }
     
-    public func setValue(_ value: Double) {
-        if self.percentage == value {
+    public func setValue(_ value: Double, lowPowerMode: Bool = false) {
+        if self.percentage == value && self.lowPowerMode == lowPowerMode {
             return
         }
         
         self.percentage = value
+        self.lowPowerMode = lowPowerMode
         DispatchQueue.main.async(execute: {
             self.display()
         })
