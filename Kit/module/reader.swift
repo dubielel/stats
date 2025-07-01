@@ -41,7 +41,7 @@ open class Reader<T: Codable>: NSObject, ReaderInternal_p {
     public var log: NextLog {
         NextLog.shared.copy(category: "\(String(describing: self))")
     }
-    private let valueQueue = DispatchQueue(label: "eu.exelban.readerActiveQueue")
+    private let valueQueue = DispatchQueue(label: "dubielel.readerActiveQueue")
     private var _value: T?
     public var value: T? {
         get { self.valueQueue.sync { self._value } }
@@ -64,7 +64,7 @@ open class Reader<T: Codable>: NSObject, ReaderInternal_p {
     private var locked: Bool = true
     private var initlizalized: Bool = false
     
-    private let activeQueue = DispatchQueue(label: "eu.exelban.readerActiveQueue")
+    private let activeQueue = DispatchQueue(label: "dubielel.readerActiveQueue")
     private var _active: Bool = false
     public var active: Bool {
         get { self.activeQueue.sync { self._active } }

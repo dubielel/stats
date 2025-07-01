@@ -1,5 +1,5 @@
 APP = Stats
-BUNDLE_ID = eu.exelban.$(APP)
+BUNDLE_ID = dubielel.$(APP)
 
 BUILD_PATH = $(PWD)/build
 APP_PATH = "$(BUILD_PATH)/$(APP).app"
